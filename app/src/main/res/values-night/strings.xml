@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="album_id">Album ID</string>
+    <string name="id">ID</string>
+    <string name="title">Title</string>
+</resources>
