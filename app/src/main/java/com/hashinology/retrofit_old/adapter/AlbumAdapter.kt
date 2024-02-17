@@ -1,6 +1,5 @@
 package com.hashinology.retrofit_old.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.hashinology.retrofit_old.ClickedNotifier
 import com.hashinology.retrofit_old.R
 import com.hashinology.retrofit_old.models.AlbumModel
 
 class AlbumAdapter(
-    val albumModelList: List<AlbumModel>
+    val albumModelList: List<AlbumModel>,
+    val clickedNotifier: ClickedNotifier
 ): RecyclerView.Adapter<AlbumAdapter.ViewHolders>() {
+    val list = albumModelList
     class ViewHolders(itemView: View): RecyclerView.ViewHolder(itemView) {
         val albumId = itemView.findViewById<TextView>(R.id.tvAlbumValue)
         val id = itemView.findViewById<TextView>(R.id.tvIDValue)
@@ -35,10 +37,15 @@ class AlbumAdapter(
         holder.albumId.text = album.albumId.toString()
         holder.id.text = album.id.toString()
         holder.title.text = album.title
+
+        holder.itemView.setOnClickListener {
+            clickedNotifier.getClciked(album)
+        }
     }
 
     override fun getItemCount(): Int {
         return albumModelList.size
     }
+
 
 }

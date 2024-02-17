@@ -16,6 +16,7 @@ class AlbumVM(context: Application): AndroidViewModel(context) {
     private var _getRetro = MutableLiveData<List<AlbumModel>>()
     val getRetro: LiveData<List<AlbumModel>> = _getRetro
 
+    // init its for the Room
     init {
         val dao = AlbumDB.getInstance(context).getDBDao()
         repo = AlbumRepo(dao)
@@ -33,4 +34,7 @@ class AlbumVM(context: Application): AndroidViewModel(context) {
 
         }
     }
+
+    suspend fun insert(albumModel: AlbumModel) = repo.getUpsert(albumModel)
+    suspend fun delete(albumModel: AlbumModel) = repo.getDelete(albumModel)
 }
