@@ -3,6 +3,7 @@ package com.hashinology.retrofit_old
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hashinology.retrofit_old.adapter.AlbumAdapter
@@ -15,26 +16,15 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     lateinit var albumAdapter: AlbumAdapter
     lateinit var recyclerView: RecyclerView
+    lateinit var albumVM: AlbumVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        albumVM = AlbumVM(application)
+        albumVM.getRetro.observe(this, Observer {
 
-        val retrofitClient = RetrofitClient.getInstanceBuild().getAlbumList()
-        retrofitClient.enqueue(object : Callback<List<AlbumModel>> {
-            override fun onResponse(
-                call: Call<List<AlbumModel>>,
-                response: Response<List<AlbumModel>>
-            ) {
-                if (response.body() != null){
-                    setUpRecyclerView(response.body()!!)
-                }
-            }
-
-            override fun onFailure(call: Call<List<AlbumModel>>, t: Throwable) {
-                Toast.makeText(this@MainActivity,t.message, Toast.LENGTH_SHORT).show()
-            }
         })
     }
 
